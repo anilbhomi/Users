@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Users</string>
+    <string name="name">Name</string>
+    <string name="add_users">Add Users</string>
+    <string name="filter">Filter</string>
+    <string name="apply">Apply</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="no_records_available">No records available</string>
+    <string name="reset">Reset</string>
+
+    <string-array name="device_types">
+        <item>Android</item>
+        <item>Iphone</item>
+        <item>Windows</item>
+        <item>Mac</item>
+        <item>Others</item>
+    </string-array>
+</resources>
