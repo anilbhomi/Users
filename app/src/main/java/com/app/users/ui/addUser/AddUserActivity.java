@@ -12,10 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.app.users.R;
@@ -77,16 +74,11 @@ public class AddUserActivity extends BaseActivity<ActivityAddUserBinding, AddUse
     }
 
     private void observableListener() {
-        mViewModel.resetField.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
-                clearSelection();
-            }
-        });
+        mViewModel.resetField.observe(this, aBoolean -> clearSelection());
     }
 
     private void clearSelection() {
-        Glide.with(AddUserActivity.this).load(R.drawable.ic_baseline_account_circle_24).into(viewDataBinding.ivProfileImage);
+        Glide.with(AddUserActivity.this).load(R.drawable.ic_account).into(viewDataBinding.ivProfileImage);
         viewDataBinding.spinnerDeviceType.setSelection(0);
         mViewModel.registeredAt.setValue(System.currentTimeMillis());
         mViewModel.selectedGender.setValue(R.id.rbMale);
@@ -121,15 +113,6 @@ public class AddUserActivity extends BaseActivity<ActivityAddUserBinding, AddUse
         }
     }
 
-    ActivityResultLauncher<String> mImageResult = registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
-        if (uri != null) {
-            mViewModel.profileImage = uri.toString();
-            Glide.with(this).load(uri).into(viewDataBinding.ivProfileImage);
-        } else {
-            showToastMessage("Invalid Image");
-        }
-    });
-
     private void openDatePicker() {
         final Calendar calendar = Calendar.getInstance();
         int mYear = calendar.get(Calendar.YEAR);
@@ -141,20 +124,15 @@ public class AddUserActivity extends BaseActivity<ActivityAddUserBinding, AddUse
                     calendar.set(Calendar.MONTH, monthOfYear);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                     long timestamp = calendar.getTimeInMillis();
-                    mViewModel.registeredAt.setValue(calendar.getTimeInMillis());
+                    mViewModel.registeredAt.setValue(timestamp);
                     mViewModel.createdAt = timestamp;
                 }, mYear, mMonth, mDay);
         datePickerDialog.show();
     }
 
     public static void startActivity(Context context) {
-        Intent intent = new Intent(context, AddUserActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(context, AddUserActivity.class);
         context.startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mImageResult.unregister();
     }
 }

@@ -15,29 +15,25 @@ public class DateUtils {
     }
 
     public static Long getTodayDate() {
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT, Locale.getDefault());
-            Date date = new Date(System.currentTimeMillis());
-            String dateString = simpleDateFormat.format(date);
-            Date d = simpleDateFormat.parse(dateString.toLowerCase());
-            return d.getTime();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0L;
-        }
+        final Calendar calendar = Calendar.getInstance();
+        calendar.get(Calendar.YEAR);
+        calendar.get(Calendar.MONTH);
+        calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTimeInMillis();
     }
 
     public static Long getTomorrowDate() {
-        try {
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE,1);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DEFAULT_DATE_FORMAT, Locale.getDefault());
-            String dateString = simpleDateFormat.format(calendar.getTime());
-            Date d = simpleDateFormat.parse(dateString.toLowerCase());
-            return d.getTime();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0L;
-        }
+        final Calendar calendar = Calendar.getInstance();
+        calendar.get(Calendar.YEAR);
+        calendar.get(Calendar.MONTH);
+        calendar.get(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.add(Calendar.DATE, 1);
+        return calendar.getTimeInMillis();
     }
 }

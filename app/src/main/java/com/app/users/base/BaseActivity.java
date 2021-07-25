@@ -1,12 +1,6 @@
 package com.app.users.base;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,13 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
-import androidx.room.Room;
 
 import com.app.users.BR;
 import com.app.users.R;
 import com.app.users.data.local.AppDatabase;
-
-import org.w3c.dom.Text;
+import com.app.users.utils.ViewUtil;
 
 public abstract class BaseActivity<DATA_BINDING extends ViewDataBinding, VIEW_MODEL extends BaseViewModel> extends AppCompatActivity {
     public DATA_BINDING viewDataBinding;
@@ -46,7 +38,7 @@ public abstract class BaseActivity<DATA_BINDING extends ViewDataBinding, VIEW_MO
         viewDataBinding.executePendingBindings();
         mViewModel = getViewModel();
         viewDataBinding.setVariable(getBindingVariable(), mViewModel);
-        setupUI(viewDataBinding.getRoot());
+        ViewUtil.setupUI(this, viewDataBinding.getRoot());
     }
 
     private void initObservers() {
@@ -59,45 +51,13 @@ public abstract class BaseActivity<DATA_BINDING extends ViewDataBinding, VIEW_MO
         Toast.makeText(BaseActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-    public void setupToolbar(
-            Toolbar toolbar,
-            String title,
-            boolean backButtonEnabled) {
+    public void setupToolbar(Toolbar toolbar, String title, boolean backButtonEnabled) {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(backButtonEnabled);
         TextView tvToolbarTitle = findViewById(R.id.tv_toolbar_title);
         tvToolbarTitle.setText(title);
-    }
-
-    void setupUI(View view) {
-        //Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    hideSoftKeyboard();
-                    return false;
-                }
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-                View innerView = ((ViewGroup) view).getChildAt(i);
-                setupUI(innerView);
-            }
-        }
-    }
-
-    void hideSoftKeyboard() {
-        View view = getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
     }
 
     public void setDatabase() {

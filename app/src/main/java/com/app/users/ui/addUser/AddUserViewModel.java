@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.app.users.R;
 import com.app.users.base.BaseViewModel;
 import com.app.users.data.local.UserModel;
+import com.app.users.utils.AppConstants;
 
 import java.util.Objects;
 
@@ -36,24 +37,26 @@ public class AddUserViewModel extends BaseViewModel {
             userModel.setProfileImage(profileImage);
             if (((AddUserRepository) getRepository()).insertUser(userModel)) {
                 resetField.setValue(true);
-                showToastMessage("User added successfully.");
+                showToastMessage(AppConstants.SUCCESS_MESSAGE);
             } else {
-                showToastMessage("Failed");
+                showToastMessage(AppConstants.FAILED_MESSAGE);
             }
         }
     }
 
     public String validateDate() {
         if (Objects.equals(etName.getValue(), "") || Objects.equals(etName.getValue(), null)) {
-            return "Name is required.";
+            return AppConstants.ERR_EMPTY_NAME;
         } else if (Objects.equals(etPhone.getValue(), "") || Objects.equals(etPhone.getValue(), null)) {
-            return "Phone number is required.";
+            return AppConstants.ERR_EMPTY_PHONE;
         } else if (Objects.requireNonNull(etPhone.getValue()).length() != 10) {
-            return "Phone number should be of 10 digits.";
+            return AppConstants.ERR_PHONE_LENGTH;
         } else if (Objects.equals(etEmail.getValue(), "") || Objects.equals(etEmail.getValue(), null)) {
-            return "Email address is required.";
+            return AppConstants.ERR_EMPTY_EMAIL;
         } else if (!isEmailValid(etEmail.getValue())) {
-            return "Enter valid email address.";
+            return AppConstants.ERR_INVALID_EMAIL;
+        } else if (profileImage.isEmpty()) {
+            return AppConstants.ERR_EMPTY_PHOTO;
         } else {
             return null;
         }
@@ -67,14 +70,14 @@ public class AddUserViewModel extends BaseViewModel {
     String getGenderType() {
         if (selectedGender.getValue() != null) {
             if (selectedGender.getValue() == R.id.rbMale) {
-                return "Male";
+                return AppConstants.MALE;
             } else if (selectedGender.getValue() == R.id.rbFemale) {
-                return "Female";
+                return AppConstants.FEMALE;
             } else {
-                return "Others";
+                return AppConstants.OTHER;
             }
         } else {
-            return "Male";
+            return AppConstants.MALE;
         }
     }
 }

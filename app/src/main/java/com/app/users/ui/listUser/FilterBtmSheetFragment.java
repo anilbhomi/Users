@@ -82,9 +82,13 @@ public class FilterBtmSheetFragment extends BottomSheetDialogFragment {
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, monthOfYear);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    calendar.set(Calendar.HOUR_OF_DAY, 0);
+                    calendar.set(Calendar.MINUTE, 0);
+                    calendar.set(Calendar.SECOND, 0);
                     fromTimeStamp = calendar.getTimeInMillis();
                     mBinding.tvFromDate.setText(DateUtils.generateDateFromTimeStamp(fromTimeStamp));
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMaxDate(toTimeStamp);
         datePickerDialog.show();
     }
 
@@ -99,9 +103,13 @@ public class FilterBtmSheetFragment extends BottomSheetDialogFragment {
                     calendar.set(Calendar.YEAR, year);
                     calendar.set(Calendar.MONTH, monthOfYear);
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                    calendar.set(Calendar.HOUR_OF_DAY, 23);
+                    calendar.set(Calendar.MINUTE, 59);
+                    calendar.set(Calendar.SECOND, 59);
                     toTimeStamp = calendar.getTimeInMillis();
                     mBinding.tvToDate.setText(DateUtils.generateDateFromTimeStamp(toTimeStamp));
                 }, mYear, mMonth, mDay);
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
 

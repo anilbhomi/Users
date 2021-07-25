@@ -28,8 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:padding="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            tools:layout_editor_absoluteX="8dp">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -72,7 +71,7 @@
                         style="@style/EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Phone number"
+                        android:hint="@string/phone_number"
                         android:inputType="phone"
                         android:maxLength="10"
                         android:text="@={viewModel.etPhone}" />
@@ -94,7 +93,8 @@
                         style="@style/EditText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Email Address"
+                        android:hint="@string/email_address"
+                        android:imeOptions="actionDone"
                         android:inputType="textEmailAddress"
                         android:text="@={viewModel.etEmail}" />
 
@@ -104,12 +104,12 @@
                     android:id="@+id/tvGender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gender: "
+                    android:text="@string/gender"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/rgGender"
                     app:layout_constraintEnd_toStartOf="@+id/rgGender"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/inputEmail" />
+                    app:layout_constraintTop_toTopOf="@+id/rgGender" />
 
                 <RadioGroup
                     android:id="@+id/rgGender"
@@ -127,27 +127,27 @@
                         android:id="@+id/rbMale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Male" />
+                        android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/rbFemale"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Female" />
+                        android:text="@string/female" />
 
                     <RadioButton
                         android:id="@+id/rbOthers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Others" />
+                        android:text="@string/others" />
                 </RadioGroup>
 
                 <TextView
                     android:id="@+id/tvDeviceType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Device Type: "
+                    android:text="@string/device_type"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/spinnerDeviceType"
                     app:layout_constraintStart_toStartOf="parent"
@@ -167,7 +167,7 @@
                     android:id="@+id/tvCreatedAtLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Registered At: "
+                    android:text="@string/registered_at"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@+id/ibRefreshDate"
                     app:layout_constraintStart_toStartOf="parent"
@@ -191,7 +191,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@null"
                     android:padding="8dp"
-                    android:src="@drawable/ic_baseline_refresh_24"
+                    android:src="@drawable/ic_refresh"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/spinnerDeviceType" />
 
@@ -201,7 +201,7 @@
                     android:layout_height="0dp"
                     android:background="@color/cardview_shadow_start_color"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_account_circle_24"
+                    android:src="@drawable/ic_account"
                     app:layout_constraintBottom_toBottomOf="@+id/inputPhone"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:onClick="@{()->viewModel.onSubmit()}"
-                    android:text="Submit"
+                    android:text="@string/add"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ibRefreshDate" />
