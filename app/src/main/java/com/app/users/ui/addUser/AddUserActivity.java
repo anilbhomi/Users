@@ -48,8 +48,7 @@ public class AddUserActivity extends BaseActivity<ActivityAddUserBinding, AddUse
     private void initViews() {
         setupToolbar((Toolbar) viewDataBinding.toolbar, getString(R.string.add_users), true);
 
-        RadioGroup rgGender = findViewById(R.id.rgGender);
-        rgGender.setOnCheckedChangeListener((radioGroup, checkedId) -> mViewModel.selectedGender.setValue(checkedId));
+        viewDataBinding.rgGender.setOnCheckedChangeListener((radioGroup, checkedId) -> mViewModel.selectedGender.setValue(checkedId));
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.device_types, R.layout.spinner_item);
@@ -67,8 +66,7 @@ public class AddUserActivity extends BaseActivity<ActivityAddUserBinding, AddUse
             }
         });
 
-        ImageButton ibDateRefresh = findViewById(R.id.ibRefreshDate);
-        ibDateRefresh.setOnClickListener(view -> openDatePicker());
+        viewDataBinding.ibRefreshDate.setOnClickListener(view -> openDatePicker());
 
         viewDataBinding.ivProfileImage.setOnClickListener(view -> openImagePicker());
     }
